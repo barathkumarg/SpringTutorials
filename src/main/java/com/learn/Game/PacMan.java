@@ -1,8 +1,13 @@
-package com.learn.LooseCoupling;
+package com.learn.Game;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
+@Component
+@Qualifier("PacMan")
 public class PacMan implements GameConsole{
     @Override
-    public void run() {
+    public void up() {
         System.out.println(" Pacman Run");
     }
 

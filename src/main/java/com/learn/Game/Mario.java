@@ -1,10 +1,14 @@
-package com.learn.LooseCoupling;
+package com.learn.Game;
 
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
+
+@Component
+@Primary
 public class Mario implements GameConsole{
 
-
     @Override
-    public void run() {
+    public void up() {
         System.out.println("Mario Run");
     }
 
