@@ -1,4 +1,4 @@
-package com.learn.LooseCoupling;
+package com.learn.game;
 
 public class GameRunner {
     private GameConsole game;

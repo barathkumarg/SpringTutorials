@@ -1,6 +1,6 @@
-package com.learn.LooseCoupling;
+package com.learn.game;
 
-public class Mario implements GameConsole{
+public class Mario implements GameConsole {
 
 
     @Override
