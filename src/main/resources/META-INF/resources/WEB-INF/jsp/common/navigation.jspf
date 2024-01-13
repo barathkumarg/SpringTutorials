@@ -1,0 +1,12 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light mb-3 p-1">
+	<a class="navbar-brand m-1" href="https://www.google.com/imgres?imgurl=https%3A%2F%2Ftimelinecovers.pro%2Ffacebook-cover%2Fdownload%2Fthe-dark-knight-joker-with-a-knife-facebook-cover.jpg&tbnid=UmVcnZttRlbSwM&vet=12ahUKEwjd4reh3sqDAxVajmMGHeGLA2YQMygFegQIARBU..i&imgrefurl=https%3A%2F%2Ftimelinecovers.pro%2Fcovers%2Fmovies-and-tv%2Fthe-dark-knight-joker-with-a-knife-facebook-cover-photo&docid=fymvOTUl8zEXBM&w=851&h=315&q=joker%20in%20banner%20size&ved=2ahUKEwjd4reh3sqDAxVajmMGHeGLA2YQMygFegQIARBU">Todo App</a>
+	<div class="collapse navbar-collapse">
+		<ul class="navbar-nav">
+			<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+			<li class="nav-item"><a class="nav-link" href="/todo-list">Todos</a></li>
+		</ul>
+	</div>
+	<ul class="navbar-nav">
+		<li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+	</ul>
+</nav>

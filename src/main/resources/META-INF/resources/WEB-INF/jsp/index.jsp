@@ -1,10 +1,9 @@
-<html>
-	<head>
-		<title> My first HTML Page - JSP</title>
-	</head>
-	<body>
+<%@ include file="common/header.jspf" %>
+<%@ include file="common/navigation.jspf" %>
+	<div class="container">
 		My first html page with body - JSP
 		Name: ${name} <br>
-		Password: ${password}
-	</body>
-</html
+
+		<div><a href="todo-list"> To Do List </a></div>
+	</div>
+<%@ include file="common/footer.jspf" %>
