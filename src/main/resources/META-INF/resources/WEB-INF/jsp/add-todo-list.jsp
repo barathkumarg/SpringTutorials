@@ -9,6 +9,7 @@
            	<form:input type="text" path="description" required="required"/>
            	<form:errors path="description" cssClass="text-warning"/>
            </fieldset>
+
            <fieldset class="mb-3">
            	<form:label path="date">Target Date</form:label>
            	<form:input type="text" path="date" required="required"/>
@@ -23,6 +24,11 @@
 
 	</div>
 
+
+
+
+
+<%@ include file="common/footer.jspf" %>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#date').datepicker({
@@ -30,7 +36,3 @@
         });
     });
 </script>
-
-
-
-<%@ include file="common/footer.jspf" %>

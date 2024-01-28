@@ -1,11 +1,22 @@
 package com.learn.SpringBootApplication.Bean;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.Size;
+import jakarta.persistence.Id;
+import jdk.jfr.Name;
 
 import java.time.LocalDate;
 
+@Entity(name="TODO")
 public class ToDo {
 
+    public ToDo(){
+
+    }
+
+    @Id
+    @GeneratedValue
     private int id;
     private String username;
     @Size(min=10, message="Enter atleast 10 characters")
@@ -36,11 +47,11 @@ public class ToDo {
     }
 
     public LocalDate getDate() {
-        return date;
+        return targetDate;
     }
 
     public void setDate(LocalDate date) {
-        this.date = date;
+        this.targetDate = date;
     }
 
     public Boolean getDone() {
@@ -51,13 +62,14 @@ public class ToDo {
         this.done = done;
     }
 
-    private LocalDate date;
+
+    private LocalDate targetDate;
 
     public ToDo(int id, String username, String description, LocalDate date, Boolean done) {
         this.id = id;
         this.username = username;
         this.description = description;
-        this.date = date;
+        this.targetDate = date;
         this.done = done;
     }
 
