@@ -1,5 +1,7 @@
 package com.learn.SpringBootApplication.Bean;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
 import org.springframework.stereotype.Component;
 
 
@@ -16,6 +18,7 @@ public class Employee {
                 '}';
     }
 
+    @Size(min = 2,message = "Atleast 2 characters required")
     private String name;
 
     public Employee(Integer id, String name, String location) {
@@ -49,6 +52,7 @@ public class Employee {
         this.id = id;
     }
 
+    @Size(min = 4,message = "Atleast 2 characters required")
     private String location;
 
 }
