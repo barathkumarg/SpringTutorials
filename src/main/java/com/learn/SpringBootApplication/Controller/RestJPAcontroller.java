@@ -1,12 +1,14 @@
 package com.learn.SpringBootApplication.Controller;
 
-
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.learn.SpringBootApplication.Bean.Employee;
+import com.learn.SpringBootApplication.Bean.Skill;
 import com.learn.SpringBootApplication.ErrorHandlings.CustomResourceNotFoundException;
 import com.learn.SpringBootApplication.Service.EmployeeService;
+import com.learn.SpringBootApplication.Service.JPA.EmployeeRepo;
+import com.learn.SpringBootApplication.Service.JPA.SkillRepo;
 import jakarta.validation.Valid;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -20,29 +22,31 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-public class Restcontroller {
+public class RestJPAcontroller {
 
-    //constructor injection for message source
-    private MessageSource message;
 
     //Employee service constructor injection
-    EmployeeService service;
-    public Restcontroller(EmployeeService service,MessageSource message){
+    SkillRepo skillrepository;
+    EmployeeRepo repository;
 
-        this.service = service;
-        this.message = message;
+    public RestJPAcontroller(SkillRepo skillrepository,EmployeeRepo repository){
+
+        this.skillrepository = skillrepository;
+        this.repository = repository;
+
     }
 
     //controller logic
-    @GetMapping("/employee/filter")
+    @GetMapping("/jpa/employee/filter")
     public MappingJacksonValue getallEMployeefilter(){
 
-        List<Employee> emp_list =  service.getallEmployee();
+        List<Employee> emp_list =  repository.findAll();
 
         //Example for Dynamic filtering
         MappingJacksonValue jacksonValue = new MappingJacksonValue(emp_list);
@@ -54,41 +58,41 @@ public class Restcontroller {
         return jacksonValue;
     }
 
-    @GetMapping("/employee")
+    @GetMapping("/jpa/employee")
     public List<Employee> getallEMployee(){
 
-        return service.getallEmployee();
+        return repository.findAll();
 
     }
 
 
 
     //HATEOS example
-    @GetMapping("/employee/{id}")
+    @GetMapping("/jpa/employee/{id}")
     public EntityModel<Employee> getemployee(@PathVariable int id){
-        Employee employee =  service.getEmployee(id);
+        Optional<Employee> employee =  repository.findById(id);
 
-        if (employee == null){
+        if (employee.isEmpty()){
             throw new CustomResourceNotFoundException("Id not found : "+ id);
         }
         //Adding the hateos info for the employee/id url
-        EntityModel<Employee> entitymodel = EntityModel.of(employee);
+        EntityModel<Employee> entitymodel = EntityModel.of(employee.get());
         WebMvcLinkBuilder link =  linkTo(methodOn(this.getClass()).getallEMployee());
         entitymodel.add(link.withRel("all-users"));
 
         return entitymodel;
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/jpa/delete/{id}")
     public void deleteEmployee(@PathVariable int id){
-        service.deleteEmployee(id);
+        repository.deleteById(id);
     }
 
 
     //post url
-    @PostMapping("/employee")
+    @PostMapping("/jpa/employee")
     public ResponseEntity<Object> addEmployee(@Valid @RequestBody Employee employee){
-        service.saveEmployee(employee);
+        repository.save(employee);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -97,11 +101,14 @@ public class Restcontroller {
         return ResponseEntity.created(location).build();
     }
 
-    //controller for internationalization example
-    @GetMapping("/hello")
-    public String hello(){
-        Locale locale = LocaleContextHolder.getLocale();
-        return message.getMessage("good.morning.message", null, "Default Message", locale );
+    @GetMapping("/jpa/employee/{id}/skill")
+    public List<Skill> getskillbyEmployee(@PathVariable Integer id){
+        Optional<Employee> employee = repository.findById(id);
+        if (employee.isEmpty()){
+            throw new CustomResourceNotFoundException("id: "+id);
+        }
+        return (List<Skill>) employee.get().getSkill();
+
     }
 
 }

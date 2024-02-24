@@ -1,13 +1,43 @@
 package com.learn.SpringBootApplication.Bean;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.Generated;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 
+//@JsonFilter("locationFilter")   // filter name for dynamic filter
+@Entity
 public class Employee {
 
-    private Integer id;
+    //empty constructor
+    protected Employee() {
+
+    }
+
+    //@JsonIgnore //-> Static filtering
+    @Id
+    @GeneratedValue
+    private Integer id;  // ignore this attribute in the api
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "employee_id")
+    private List<Skill> skill;
+
+    public List<Skill> getSkill() {
+        return skill;
+    }
+
+    public void setSkill(List<Skill> skill) {
+        this.skill = skill;
+    }
 
     @Override
     public String toString() {
