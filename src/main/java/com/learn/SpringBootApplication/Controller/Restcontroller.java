@@ -7,6 +7,8 @@ import com.learn.SpringBootApplication.Service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -14,6 +16,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.Locale;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class Restcontroller {
@@ -35,14 +40,20 @@ public class Restcontroller {
         return service.getallEmployee();
     }
 
+    //HATEOS example
     @GetMapping("/employee/{id}")
-    public Employee getemployee(@PathVariable int id){
+    public EntityModel<Employee> getemployee(@PathVariable int id){
         Employee employee =  service.getEmployee(id);
 
         if (employee == null){
             throw new CustomResourceNotFoundException("Id not found : "+ id);
         }
-        return employee;
+        //Adding the hateos info for the employee/id url
+        EntityModel<Employee> entitymodel = EntityModel.of(employee);
+        WebMvcLinkBuilder link =  linkTo(methodOn(this.getClass()).getallEMployee());
+        entitymodel.add(link.withRel("all-users"));
+
+        return entitymodel;
     }
 
     @GetMapping("/delete/{id}")

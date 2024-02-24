@@ -108,9 +108,15 @@
 			</dependency>
 
 			<!-- XML Support Dependency -->
+<!--			<dependency>-->
+<!--				<groupId>com.fasterxml.jackson.dataformat</groupId>-->
+<!--				<artifactId>jackson-dataformat-xml</artifactId>-->
+<!--			</dependency>-->
+
+			<!-- HATEOS dependency -->
 			<dependency>
-				<groupId>com.fasterxml.jackson.dataformat</groupId>
-				<artifactId>jackson-dataformat-xml</artifactId>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-hateoas</artifactId>
 			</dependency>
 
 		</dependencies>
