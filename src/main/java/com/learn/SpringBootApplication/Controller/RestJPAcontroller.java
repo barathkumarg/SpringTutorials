@@ -101,6 +101,24 @@ public class RestJPAcontroller {
         return ResponseEntity.created(location).build();
     }
 
+    @PostMapping("/jpa/employee/{id}/skill")
+    public ResponseEntity<Object> addPost(@PathVariable int id,@Valid @RequestBody Skill skill){
+        Optional<Employee> employee = repository.findById(id);
+        if (employee.isEmpty()){
+            throw new CustomResourceNotFoundException("id: "+id);
+        }
+        skill.setEmployee_id(employee.get());
+
+        skillrepository.save(skill);
+
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(skill.getId())
+                .toUri();
+        return ResponseEntity.created(location).build();
+    }
+
     @GetMapping("/jpa/employee/{id}/skill")
     public List<Skill> getskillbyEmployee(@PathVariable Integer id){
         Optional<Employee> employee = repository.findById(id);

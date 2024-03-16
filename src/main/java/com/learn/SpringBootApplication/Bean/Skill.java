@@ -2,6 +2,7 @@ package com.learn.SpringBootApplication.Bean;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Skill {
@@ -25,6 +26,17 @@ public class Skill {
         return message;
     }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Employee getEmployee_id() {
+        return employee_id;
+    }
+
+    public void setEmployee_id(Employee employee_id) {
+        this.employee_id = employee_id;
+    }
 
     public void setEmployee(Employee employee) {
         this.employee_id = employee;
@@ -36,6 +48,7 @@ public class Skill {
         this.employee_id = employee;
     }
 
+    @Size(min=2)
     private String message;
 
     @JsonIgnore
